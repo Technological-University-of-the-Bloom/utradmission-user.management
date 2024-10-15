@@ -1,0 +1,40 @@
+version: "3"
+services:
+  app:
+    image: utradmission-user.management
+    ports:
+      - "3000:3000"
+
+  postgres:
+    container_name: utradmission-postgres
+    image: postgres:16.4-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - /data/utradmission-postgres:/data/postgres
+    env_file:
+      - .env
+    networks:
+      - postgres
+
+  pgadmin:
+    links:
+      - postgres:postgres
+    container_name: utradmission-pgadmin
+    image: dpage/pgadmin4
+    ports:
+      - "8080:80"
+    volumes:
+      - /data/utradmission-pgadmin:/root/.pgadmin
+    env_file:
+      - .env
+    networks:
+      - postgres
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+networks:
+  postgres:
+    driver: bridge
