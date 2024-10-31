@@ -24,7 +24,7 @@ import { DrizzleService } from './drizzle.service';
           password: databaseOptions.password,
           database: databaseOptions.database,
           ssl: {
-            rejectUnauthorized: false,
+            rejectUnauthorized: false, //TEMPORARY
           },
         });
       },
